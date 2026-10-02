@@ -1,4 +1,4 @@
-I wrote this with my own harness bitch (Breaking Bad reference)
+I wrote this with my own harness. Bitch (Breaking Bad reference)
 =====================================================
 
 # Harness Gadget

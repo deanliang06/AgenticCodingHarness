@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 I wrote this with my own harness. bitch (Breaking Bad reference)
+=======
+I wrote this with my own harness. Bitch (Breaking Bad reference)
+>>>>>>> 35d89a9518dbefe589ad2ebefbf1e1006c345655
 =====================================================
 
 # Harness Gadget

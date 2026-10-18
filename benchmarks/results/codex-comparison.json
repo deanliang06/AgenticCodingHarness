@@ -1,0 +1,51 @@
+﻿{
+    "model":  "gpt-6-luna",
+    "codex_version":  "codex-cli 0.162.0-alpha.17.2",
+    "model_config":  "ignore-user-config; CLI defaults",
+    "max_task_seconds":  180,
+    "tasks":  [
+                  {
+                      "task":  "affine-cipher",
+                      "input_tokens":  120254,
+                      "output_tokens":  947,
+                      "total_tokens":  121201,
+                      "usage_available":  true,
+                      "passed":  true,
+                      "timed_out":  false,
+                      "exit_code":  0,
+                      "agent_seconds":  27.859,
+                      "completion_seconds":  31.243,
+                      "test_output":  "test_decode_a_sentence (affine_cipher_test.AffineCipherTest.test_decode_a_sentence) ... ok\r\ntest_decode_all_the_letters (affine_cipher_test.AffineCipherTest.test_decode_all_the_letters) ... ok\r\ntest_decode_exercism (affine_cipher_test.AffineCipherTest.test_decode_exercism) ... ok\r\ntest_decode_numbers (affine_cipher_test.AffineCipherTest.test_decode_numbers) ... ok\r\ntest_decode_with_a_not_coprime_to_m (affine_cipher_test.AffineCipherTest.test_decode_with_a_not_coprime_to_m) ... ok\r\ntest_decode_with_no_spaces_in_input (affine_cipher_test.AffineCipherTest.test_decode_with_no_spaces_in_input) ... ok\r\ntest_decode_with_too_many_spaces (affine_cipher_test.AffineCipherTest.test_decode_with_too_many_spaces) ... ok\r\ntest_encode_all_the_letters (affine_cipher_test.AffineCipherTest.test_encode_all_the_letters) ... ok\r\ntest_encode_deep_thought (affine_cipher_test.AffineCipherTest.test_encode_deep_thought) ... ok\r\ntest_encode_mindblowingly (affine_cipher_test.AffineCipherTest.test_encode_mindblowingly) ... ok\r\ntest_encode_no (affine_cipher_test.AffineCipherTest.test_encode_no) ... ok\r\ntest_encode_numbers (affine_cipher_test.AffineCipherTest.test_encode_numbers) ... ok\r\ntest_encode_o_m_g (affine_cipher_test.AffineCipherTest.test_encode_o_m_g) ... ok\r\ntest_encode_omg (affine_cipher_test.AffineCipherTest.test_encode_omg) ... ok\r\ntest_encode_with_a_not_coprime_to_m (affine_cipher_test.AffineCipherTest.test_encode_with_a_not_coprime_to_m) ... ok\r\ntest_encode_yes (affine_cipher_test.AffineCipherTest.test_encode_yes) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 16 tests in 0.000s\r\n\r\nOK\r\n\r\n",
+                      "cached_input_tokens":  112640
+                  },
+                  {
+                      "task":  "beer-song",
+                      "input_tokens":  128218,
+                      "output_tokens":  867,
+                      "total_tokens":  129085,
+                      "usage_available":  true,
+                      "passed":  true,
+                      "timed_out":  false,
+                      "exit_code":  0,
+                      "agent_seconds":  33.394,
+                      "completion_seconds":  35.55,
+                      "test_output":  "test_all_verses (beer_song_test.BeerSongTest.test_all_verses) ... ok\r\ntest_first_generic_verse (beer_song_test.BeerSongTest.test_first_generic_verse) ... ok\r\ntest_first_two_verses (beer_song_test.BeerSongTest.test_first_two_verses) ... ok\r\ntest_last_generic_verse (beer_song_test.BeerSongTest.test_last_generic_verse) ... ok\r\ntest_last_three_verses (beer_song_test.BeerSongTest.test_last_three_verses) ... ok\r\ntest_verse_with_0_bottles (beer_song_test.BeerSongTest.test_verse_with_0_bottles) ... ok\r\ntest_verse_with_1_bottle (beer_song_test.BeerSongTest.test_verse_with_1_bottle) ... ok\r\ntest_verse_with_2_bottles (beer_song_test.BeerSongTest.test_verse_with_2_bottles) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.000s\r\n\r\nOK\r\n\r\n",
+                      "cached_input_tokens":  112768
+                  },
+                  {
+                      "task":  "book-store",
+                      "input_tokens":  95178,
+                      "output_tokens":  819,
+                      "total_tokens":  95997,
+                      "usage_available":  true,
+                      "passed":  true,
+                      "timed_out":  false,
+                      "exit_code":  0,
+                      "agent_seconds":  21.448,
+                      "completion_seconds":  23.528,
+                      "test_output":  "test_check_that_groups_of_four_are_created_properly_even_when_there_are_more_groups_of_three_than_groups_of_five (book_store_test.BookStoreTest.test_check_that_groups_of_four_are_created_properly_even_when_there_are_more_groups_of_three_than_groups_of_five) ... ok\r\ntest_empty_basket (book_store_test.BookStoreTest.test_empty_basket) ... ok\r\ntest_five_different_books (book_store_test.BookStoreTest.test_five_different_books) ... ok\r\ntest_four_different_books (book_store_test.BookStoreTest.test_four_different_books) ... ok\r\ntest_four_groups_of_four_are_cheaper_than_two_groups_each_of_five_and_three (book_store_test.BookStoreTest.test_four_groups_of_four_are_cheaper_than_two_groups_each_of_five_and_three) ... ok\r\ntest_group_of_four_plus_group_of_two_is_cheaper_than_two_groups_of_three (book_store_test.BookStoreTest.test_group_of_four_plus_group_of_two_is_cheaper_than_two_groups_of_three) ... ok\r\ntest_one_group_of_one_and_four_is_cheaper_than_one_group_of_two_and_three (book_store_test.BookStoreTest.test_one_group_of_one_and_four_is_cheaper_than_one_group_of_two_and_three) ... ok\r\ntest_one_group_of_one_and_two_plus_three_groups_of_four_is_cheaper_than_one_group_of_each_size (book_store_test.BookStoreTest.test_one_group_of_one_and_two_plus_three_groups_of_four_is_cheaper_than_one_group_of_each_size) ... ok\r\ntest_only_a_single_book (book_store_test.BookStoreTest.test_only_a_single_book) ... ok\r\ntest_shuffled_book_order (book_store_test.BookStoreTest.test_shuffled_book_order) ... ok\r\ntest_three_copies_of_first_book_and_two_each_of_remaining (book_store_test.BookStoreTest.test_three_copies_of_first_book_and_two_each_of_remaining) ... ok\r\ntest_three_different_books (book_store_test.BookStoreTest.test_three_different_books) ... ok\r\ntest_three_each_of_first_two_books_and_two_each_of_remaining_books (book_store_test.BookStoreTest.test_three_each_of_first_two_books_and_two_each_of_remaining_books) ... ok\r\ntest_two_copies_of_each_book (book_store_test.BookStoreTest.test_two_copies_of_each_book) ... ok\r\ntest_two_different_books (book_store_test.BookStoreTest.test_two_different_books) ... ok\r\ntest_two_each_of_first_four_books_and_one_copy_each_of_rest (book_store_test.BookStoreTest.test_two_each_of_first_four_books_and_one_copy_each_of_rest) ... ok\r\ntest_two_groups_of_four_and_a_group_of_five (book_store_test.BookStoreTest.test_two_groups_of_four_and_a_group_of_five) ... ok\r\ntest_two_groups_of_four_is_cheaper_than_group_of_five_plus_group_of_three (book_store_test.BookStoreTest.test_two_groups_of_four_is_cheaper_than_group_of_five_plus_group_of_three) ... ok\r\ntest_two_groups_of_four_is_cheaper_than_groups_of_five_and_three (book_store_test.BookStoreTest.test_two_groups_of_four_is_cheaper_than_groups_of_five_and_three) ... ok\r\ntest_two_of_the_same_book (book_store_test.BookStoreTest.test_two_of_the_same_book) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 20 tests in 0.114s\r\n\r\nOK\r\n\r\n",
+                      "cached_input_tokens":  84864
+                  }
+              ],
+    "dataset_commit":  "7e0611e77b54e2dea774cdc0aa00cf9f7ed6144f"
+}

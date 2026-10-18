@@ -34,3 +34,5 @@ class AgentOutput(BaseModel):
     type: Literal["output", "thinking"]
     msg: str
     tools_called: list[ToolCall] = []
+    outcome: Literal["answer", "completed", "blocked", "clarification"] = "answer"
+    claims: list[Literal["file_edit", "tests_passed"]] = []

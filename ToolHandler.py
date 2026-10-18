@@ -5,13 +5,15 @@ class DictError(Exception):
     def __str__(self):
         return "ChatGPT returned false args for tool"
 class ToolHandler:
-
     @staticmethod
-    def run_shell(cmd:str):
+    def run_shell(cmd:str, with_result:bool=False):
         if not cmd: raise DictError
 
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        return f"Using {cmd}, the output was {result.stdout}"
+        output = f"Using {cmd}, the output was {result.stdout}\nStderr: {result.stderr}\nExit code: {result.returncode}"
+        if with_result:
+            return output, result
+        return output
 
     @staticmethod
     def read_file(filepath:str):
@@ -25,9 +27,32 @@ class ToolHandler:
     def write_file(filepath:str, content:str):
         if not filepath or not content: raise DictError
 
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', newline='') as f:
             f.write(content)
-        return f"Successfully wrote to {filepath}"
+        verification = ToolHandler.verify_file(filepath, content)
+        return f"Successfully wrote to {filepath}\n{verification}"
+
+    @staticmethod
+    def verify_file(filepath:str, expected_content:str):
+        if not filepath: raise DictError
+
+        try:
+            with open(filepath, 'r', newline='') as f:
+                content = f.read()
+        except (OSError, UnicodeError) as e:
+            return f"Verification failed for {filepath}: could not read back the file: {e}"
+
+        if content != expected_content:
+            return f"Verification failed for {filepath}: saved content does not match the requested changes"
+
+        if os.path.splitext(filepath)[1].lower() == '.py':
+            try:
+                compile(content, filepath, 'exec')
+            except (SyntaxError, ValueError) as e:
+                return f"Changes verified in {filepath}, but Python syntax verification failed: {e}"
+            return f"Changes verified in {filepath}; Python syntax passed. Runtime behavior and bugs still require tests."
+
+        return f"Changes verified in {filepath}; code correctness was not checked. Run the relevant tests."
 
     @staticmethod
     def list_dir(path:str):
@@ -82,4 +107,3 @@ class ToolHandler:
         )
 
         return f"From a search of {query}, the response of {response.output_text} was returned"
-        

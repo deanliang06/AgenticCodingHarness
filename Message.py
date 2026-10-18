@@ -1,5 +1,6 @@
 from typing import *
 import os
+import re
 from dotenv import load_dotenv
 from openai import OpenAI
 from AgentOutputs import *
@@ -53,6 +54,15 @@ Response protocol:
 - Return an AgentOutput matching the schema exactly.
 - For tool requests, use type='thinking', a short action summary in msg, and
   populate tools_called. Do not claim the requested actions already happened.
+- Never return thinking with an empty tools_called list: no work runs in the
+  background. Request an action or give a supported final response.
+- For final output set outcome='completed' for finished action requests,
+  'answer' for questions/conversation, 'blocked' for an evidenced blocker, or
+  'clarification' when essential information is missing. For final claims of
+  edits include 'file_edit' in claims; for passing tests include 'tests_passed'.
+  These claims require recorded successful tool results. Tests must run after
+  the most recent edit. Failed tests may be reported honestly without claiming
+  tests_passed. Never label unfinished implementation work as an answer.
 - Use type='output' with tools_called=[] only when the request is completed,
   can be answered without tools, requires essential user clarification, or has
   an evidenced blocker. Explain completed work and relevant verification plainly.
@@ -120,6 +130,7 @@ class Message:
         self.id = id
         self.cwd = cwd
         self.toAppend : list[SessionMessage] = []
+        self.output = None
 
     def run(self, previousMsgs, its):
         if its > 3:
@@ -211,6 +222,10 @@ Available tool contracts:
    Purpose:
    Replace the contents of a file with new content. When you need to edit the 
    content of a file in order to fulfill a user's request.
+   The same call automatically reads the saved file back and verifies its contents.
+   Python files also receive a syntax check without executing the code. Inspect
+   the verification result and fix any reported errors. Syntax checks do not
+   establish bug-free behavior; run the relevant tests before claiming correctness.
 
    Required arguments:
    - path: str
@@ -347,6 +362,7 @@ return type='output' with tools_called=[]. The user sees only the final output.
         self.handle_raw_output(parsed)
                 
     def handle_raw_output(self, output:AgentOutput):
+        self.output = output
         #tools take precedence (idk what over) but first log the output
         newSessionMsg = SessionMessage(msg=output.msg, type=output.type, msgId=self.id, toolsCalled=[str(tool) for tool in output.tools_called])
         self.toAppend.append(newSessionMsg)
@@ -354,13 +370,21 @@ return type='output' with tools_called=[]. The user sees only the final output.
         #for each tool get ouput and append as message to session memory
         for tool in output.tools_called:
             newSessionTools = SessionMessage(msg="", type="tool", msgId=self.id)
+            newSessionTools.evidence = {"tool": tool.tool, "path": tool.path, "success": False}
             toolType = tool.tool
             if toolType == "run_shell":
-                newSessionTools.msg=ToolHandler.run_shell(getattr(tool, "cmd", ""))
+                newSessionTools.msg, result=ToolHandler.run_shell(getattr(tool, "cmd", ""), with_result=True)
+                test_command = bool(re.search(r'(?:^|[\s/])(?:pytest|unittest|ctest)(?:\s|$)|\b(?:npm|pnpm|yarn|cargo|go|dotnet)\s+test\b|\bmvn\s+test\b', tool.cmd))
+                no_tests = bool(re.search(r'Ran 0 tests|no tests ran|collected 0 items', result.stdout + result.stderr))
+                newSessionTools.evidence.update(success=result.returncode == 0,
+                    test=test_command and not no_tests, returncode=result.returncode)
             elif toolType == "read_file":
                 newSessionTools.msg=ToolHandler.read_file(getattr(tool, "path", ""))
             elif toolType == "write_file":
                 newSessionTools.msg=ToolHandler.write_file(getattr(tool, "path", ""), getattr(tool, "content", ""))
+                newSessionTools.evidence['path'] = os.path.abspath(tool.path)
+                newSessionTools.evidence['success'] = ('Changes verified in ' in newSessionTools.msg
+                    and 'verification failed' not in newSessionTools.msg.lower())
             elif toolType == "list_dir":
                 newSessionTools.msg=ToolHandler.list_dir(getattr(tool,"path", ""))
             elif toolType == "change_dir":

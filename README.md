@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 I wrote this with my own harness. bitch (Breaking Bad reference)
-=======
-I wrote this with my own harness. Bitch (Breaking Bad reference)
->>>>>>> 35d89a9518dbefe589ad2ebefbf1e1006c345655
 =====================================================
 
 # Harness Gadget
@@ -16,6 +12,8 @@ The available local operations cover running shell commands, reading and writing
 ## Aider benchmark: Harness vs Codex
 
 Three Python exercises, same `gpt-6-luna` model (October 18, 2026). Tokens include input, output, and cached input.
+
+The exercises come from [Aider's polyglot benchmark](https://github.com/Aider-AI/polyglot-benchmark), which uses Exercism problems. Our harness used **72.3% fewer reported tokens** in this run, trading off reliability: **2/3 solved versus Codex's 3/3**, with unreported timeout usage making the token reduction provisional.
 
 | Exercise | Harness tokens | Codex tokens | Harness / Codex |
 | --- | ---: | ---: | --- |
